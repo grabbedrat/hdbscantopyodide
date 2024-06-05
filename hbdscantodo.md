@@ -11,6 +11,14 @@ Porting the hdbscan package to work with Pyodide:
    - Use Emscripten to compile each generated `.c` file to WebAssembly. For example: `emcc hdbscan/_hdbscan_tree.c -o hdbscan/_hdbscan_tree.wasm`
    - This will produce `.wasm` files for each `.c` file.
 
+   source ./emsdk_env.sh
+   emcc -s WASM_BIGINT=1 -I /home/tim/miniconda3/include/python3.12 -I /home/tim/miniconda3/lib/python3.12/site-packages/numpy/core/include _hdbscan_tree.c -o _hdbscan_tree.wasm
+
+   ldd --version
+   ldd (Ubuntu GLIBC 2.35-0ubuntu3.8) 2.35
+
+
+
 3. Package the compiled code:
    - Create a new directory for the Pyodide-specific package, for example, `hdbscan-pyodide`.
    - Copy the Python code, compiled `.wasm` files, and any necessary JavaScript glue code into this directory.
@@ -83,3 +91,4 @@ The level of difficulty and the specific challenges you face may vary depending 
 It's important to be prepared to dive into the details, debug issues, and seek guidance from the Pyodide and hdbscan communities when needed. Porting a package with Cython code to work in Pyodide is a non-trivial task that requires a good understanding of Python packaging, C compilation, and WebAssembly. However, it's a great learning opportunity and a valuable contribution to the Python and data science communities.
 
 https://pyodide.org/en/stable/development/new-packages.html#new-packages
+/home/tim/miniconda3/include/python3.12
